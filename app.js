@@ -1,4 +1,3 @@
-//jshint esversion:6
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -33,15 +32,14 @@ app.use(bodyParser.urlencoded({
 app.use(session({
     secret: 'ThisIsOurLittleSecret',
     resave: false,
-    saveUninitialized: true,
-    // cookie: { secure: true }
+    saveUninitialized: true
 }));
   
 app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.set('strictQuery', false);
-mongoose.connect("mongodb://127.0.0.1/userDB",{useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URL,{useNewUrlParser: true});
 
 const userSchema = new mongoose.Schema({
     email: String,
